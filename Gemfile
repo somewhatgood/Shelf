@@ -1,11 +1,21 @@
 source 'http://rubygems.org'
 
 gem 'rails', '3.1.0'
+gem 'heroku'
+
+group :production do
+		gem 'pg'
+		gem 'thin'
+end
+
+group :development, :test do
+	gem 'sqlite3'
+end
 
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3'
+
 
 
 # Gems used only for assets and not required
@@ -29,5 +39,5 @@ gem 'jquery-rails'
 
 group :test do
   # Pretty printed test output
-  gem 'turn', :require => false
+  gem 'turn', '< 0.8.3', :require => false
 end
