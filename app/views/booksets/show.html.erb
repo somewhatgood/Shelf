@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Description:</b>
+  <%= @bookset.description %>
+</p>
+
+<p>
+  <b>Category:</b>
+  <%= @bookset.category %>
+</p>
+
+<p>
+  <b>Image url:</b>
+  <%= @bookset.image_url %>
+</p>
+
+
+<%= link_to 'Edit', edit_bookset_path(@bookset) %> |
+<%= link_to 'Back', booksets_path %>

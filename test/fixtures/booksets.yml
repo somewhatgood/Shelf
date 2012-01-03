@@ -1,0 +1,18 @@
+# coding:utf-8
+
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+novel:
+  description: これは交換しようとしている小説の説明です。99文字以内で説明する必要があります。
+  category: 小説
+  image_url: novel.png
+
+history:
+  description: これは歴史本ついての説明です。
+  category: 歴史
+  image_url: history.jpg
+  
+mysetry:
+  description: これはミステリー小説についての説明です。
+  category: ミステリー
+  image_url: mystery.gif

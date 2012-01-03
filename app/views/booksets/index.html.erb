@@ -1,0 +1,27 @@
+<h1>Listing booksets</h1>
+
+<table>
+  <tr>
+    <th>Description</th>
+    <th>Category</th>
+    <th>Image url</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @booksets.each do |bookset| %>
+  <tr>
+    <td><%= bookset.description %></td>
+    <td><%= bookset.category %></td>
+    <td><%= bookset.image_url %></td>
+    <td><%= link_to 'Show', bookset %></td>
+    <td><%= link_to 'Edit', edit_bookset_path(bookset) %></td>
+    <td><%= link_to 'Destroy', bookset, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Bookset', new_bookset_path %>
