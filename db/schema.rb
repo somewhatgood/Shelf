@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120103113837) do
+ActiveRecord::Schema.define(:version => 20120103140933) do
 
   create_table "booksets", :force => true do |t|
     t.string   "description", :limit => 99
@@ -27,6 +27,8 @@ ActiveRecord::Schema.define(:version => 20120103113837) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "email"
+    t.string   "pw_digest",  :limit => 20
   end
 
 end

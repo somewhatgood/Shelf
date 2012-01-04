@@ -3,7 +3,8 @@ Shelf::Application.routes.draw do
   get "library/index"
   
   resources :booksets
-
+  resources :users
+  
   #OmniAuth
   match "/auth/:provider/callback" => "sessions#callback"
   match "/logout" => "sessions#destroy", :as => :logout
