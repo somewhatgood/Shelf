@@ -7,10 +7,23 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-
+	
+  <% if user_signed_in? %>
+    Signed in as <%= current_user.email %>. Not you?
+    <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
+  <% else %>
+    <%= link_to "Sign up", new_user_registration_path %> or <%= link_to "sign in", new_user_session_path %>
+  <% end %>
+	
+	
+	
 	<div id="user_nav">
-	　　<%= link_to "Twitterでlogin","/auth/twitter" %>
-	　　<%= link_to "facebookでlogin", "/auth/facebook" %>
+	　　<% if current_omniuser %>
+       <%= current_omniuser.name %>さん <%= link_to "ログアウト" ,logout_path %>
+    <% else %>
+       <%= link_to "Twitterでlogin","/auth/twitter" %>
+       <%= link_to "facebookでlogin", "/auth/facebook" %>
+    <% end %>
 	</div>
 
 	<% if notice %>

@@ -1,9 +1,10 @@
 Shelf::Application.routes.draw do
+  devise_for :users
+
   get "welcome/index"
-  get "library/index"
+  get "library/index", :as => :user_root #Deviseログイン成功直後の戻り先user_rootとして登録
   
   resources :booksets
-  resources :users
   
   #OmniAuth
   match "/auth/:provider/callback" => "sessions#callback"

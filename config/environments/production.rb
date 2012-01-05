@@ -57,4 +57,7 @@ Shelf::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
+  
+    # Configuration for Devise in Prd.Env
+  config.action_mailer.default_url_options = { :host => 'link-shelf-staging.herokuapp.com' }  
 end

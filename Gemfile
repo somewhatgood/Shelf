@@ -5,6 +5,8 @@ gem 'heroku'
 gem 'omniauth'
 gem 'omniauth-twitter'
 gem 'omniauth-facebook'
+gem 'devise'
+
 
 group :production do
 		gem 'pg'
