@@ -15,7 +15,7 @@ class SessionsController < ApplicationController
        session[:user_id] = omniuser.id
        redirect_to root_url, :notice => "ログインしました。"
     else
-       # Omniuserモデルに:providerと:uidが無い場合（外部認証していない）、:provider,:uidを保存してから、ウェルカム(新規登録)ページへ遷移させる
+       # Omniuserモデルに:providerと:uidが無い場合（外部認証していない）、:provider,:uidを保存してから、新規登録ページへ遷移させる
        Omniuser.create_with_omniauth(auth)
        redirect_to new_user_registration_path, :notice => "接続は完了しました。emailがみつかりませんでした。"
     end 

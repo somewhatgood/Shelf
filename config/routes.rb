@@ -1,8 +1,8 @@
 Shelf::Application.routes.draw do
   devise_for :users
 
-  get "welcome/index"
-  get "library/index", :as => :user_root #Deviseログイン成功直後の戻り先user_rootとして登録
+  get "welcome/index", :as => :welcome
+  get "library/index", :as => :user_root #Deviseログイン直後の戻り先user_rootとして登録
   
   resources :booksets
   
