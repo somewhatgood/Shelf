@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120104133107) do
+ActiveRecord::Schema.define(:version => 20120107040526) do
 
   create_table "booksets", :force => true do |t|
     t.string   "description", :limit => 99
@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(:version => 20120104133107) do
     t.datetime "confirmation_sent_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "omniuser_id"
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true

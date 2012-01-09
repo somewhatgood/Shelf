@@ -18,24 +18,8 @@
   <% #どちらでもログインしていなければ「ログイン」を表示。クリックするとログインページへ遷移させる。%>
         <%= link_to "メンバー登録", welcome_path %><br/>
         <%= link_to "ログイン", new_user_session_path %>
-    <!--
-    <%= link_to "Sign up", new_user_registration_path %> or <%= link_to "sign in", new_user_session_path %>
-    <%= link_to "Twitterでlogin","/auth/twitter" %>
-   　<%= link_to "facebookでlogin", "/auth/facebook" %>
-     -->
   <% end %>
   <!-- /ログイン・ログアウト-->
-  
-<!--
-	<div id="user_nav">
-	　　<% if current_omniuser %>
-       <%= current_omniuser.name %>さん <%= link_to "ログアウト" ,logout_path %>
-    <% else %>
-       <%= link_to "Twitterでlogin","/auth/twitter" %>
-       <%= link_to "facebookでlogin", "/auth/facebook" %>
-    <% end %>
-	</div>
--->
 
 	<% if notice %>
 		<p id="notice"><%= notice %></p>
