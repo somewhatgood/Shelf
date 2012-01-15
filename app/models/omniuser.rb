@@ -1,6 +1,7 @@
 # coding:utf-8
 class Omniuser < ActiveRecord::Base
 	has_one :user
+	has_many :booksets
 	
 	 # twitter / facebookに接続後、omniuser.provider, omniuser.uidがなかったときに呼ばれるクラスメソッド
    def self.create_with_omniauth(auth)

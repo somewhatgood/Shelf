@@ -1,7 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   
-  
   #Omniauthでのログイン状況確認
   helper_method :current_omniuser
   private

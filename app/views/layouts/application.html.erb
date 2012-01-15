@@ -9,11 +9,15 @@
 <body>
   <!-- ログイン・ログアウト　-->
   <% if user_signed_in? %>
-	    Signed in as <%= current_user.email %>. Not you?
+		<%# Deviseでログインした場合 %>
+	    <%= current_user.omniuser.name %>さん
+	    (DEVISEでログイン)omniuserIDは<%= current_user.omniuser_id %>さん
 	    <%= link_to "ログアウト", destroy_user_session_path, :method => :delete %>
   <% elsif current_omniuser %>
+  		<%# Omniuserでログインした場合 %>
        	<%= current_omniuser.name %>さん
-       	<%= link_to "ログアウト" ,logout_path %>
+       	omniuserIDは<%= current_omniuser.id %>さん
+       	<%= link_to "ログアウト", logout_path %>
   <% else %>
   <% #どちらでもログインしていなければ「ログイン」を表示。クリックするとログインページへ遷移させる。%>
         <%= link_to "メンバー登録", welcome_path %><br/>

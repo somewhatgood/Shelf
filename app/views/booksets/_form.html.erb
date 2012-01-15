@@ -23,6 +23,17 @@
     <%= f.label :image_url %><br />
     <%= f.text_field :image_url %>
   </div>
+  
+  <% if current_user %>
+  		<%= f.hidden_field :omniuser_id, :value => current_user.omniuser_id %>
+  
+  <% elsif current_omniuser %>
+  		<%= f.hidden_field :omniuser_id, :value => current_omniuser.id %>
+  <% end %>
+  
+  
+  
+  
   <div class="actions">
     <%= f.submit %>
   </div>

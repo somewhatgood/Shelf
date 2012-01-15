@@ -41,6 +41,17 @@ class BooksetsController < ApplicationController
   # POST /booksets.json
   def create
     @bookset = Bookset.new(params[:bookset])
+    
+    
+
+
+    
+    #@bookset.omniuser_id = current_omniuser.id
+
+
+
+
+
 
     respond_to do |format|
       if @bookset.save

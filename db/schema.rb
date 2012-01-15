@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120107040526) do
+ActiveRecord::Schema.define(:version => 20120115142348) do
 
   create_table "booksets", :force => true do |t|
     t.string   "description", :limit => 99
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(:version => 20120107040526) do
     t.string   "image_url"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "omniuser_id"
   end
 
   create_table "omniusers", :force => true do |t|

@@ -5,7 +5,7 @@
     <th>Description</th>
     <th>Category</th>
     <th>Image url</th>
-    <th></th>
+    <th>Omniuser_id</th>
     <th></th>
     <th></th>
   </tr>
@@ -15,6 +15,7 @@
     <td><%= bookset.description %></td>
     <td><%= bookset.category %></td>
     <td><%= bookset.image_url %></td>
+    <td><%= bookset.omniuser.name %></td>
     <td><%= link_to 'Show', bookset %></td>
     <td><%= link_to 'Edit', edit_bookset_path(bookset) %></td>
     <td><%= link_to 'Destroy', bookset, confirm: 'Are you sure?', method: :delete %></td>

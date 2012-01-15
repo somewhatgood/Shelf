@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-	belongs_to :omniusers
+	belongs_to :omniuser
 	
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
