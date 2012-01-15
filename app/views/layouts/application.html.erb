@@ -10,7 +10,7 @@
   <!-- ログイン・ログアウト　-->
   <% if user_signed_in? %>
 	    Signed in as <%= current_user.email %>. Not you?
-	    <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
+	    <%= link_to "ログアウト", destroy_user_session_path, :method => :delete %>
   <% elsif current_omniuser %>
        	<%= current_omniuser.name %>さん
        	<%= link_to "ログアウト" ,logout_path %>
@@ -21,9 +21,12 @@
   <% end %>
   <!-- /ログイン・ログアウト-->
 
-	<% if notice %>
+
+
 		<p id="notice"><%= notice %></p>
-	<% end %>
+		<p id="notice"><%= alert %></p>
+		
+
 
 <%= yield %>
 

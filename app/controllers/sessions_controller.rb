@@ -23,12 +23,12 @@ class SessionsController < ApplicationController
 			       		redirect_to root_url, :notice => "ログインしました。"
 			     else
 			     	    #②が無かった = メール確認が済んでいない
-			     	    redirect_to root_url, :notice => "仮登録のメール確認ができていません。メールに書かれたURLをクリックして本登録を完了してください。"
+			     	    redirect_to new_user_registration_path, :notice => "#{auth["info"]["name"]}さんのアカウントは作成済みですが、メンバー登録が完了していません。登録確認メールをお送りしてありますのでご確認ください。"
 			     end
        else
          #存在しなければDevise認証はまだだから、ユーザ登録ページへ
           session[:tmp_uid] = auth["uid"]
-       		redirect_to new_user_registration_path, :notice => "#{auth["info"]["name"]}さんの#{auth["provider"]}アカウントとは接続済みです。メンバー登録に必要なメールアドレスとパスワードを入力してください。"
+       		redirect_to new_user_registration_path, :notice => "#{auth["info"]["name"]}さんのアカウントは作成済みですが、メールアドレスとパスワードが未登録です。メールアドレスとパスワードを入力してメンバー登録を完了してください。"
        end
     else
        # Omniuserモデルに:providerと:uidが無い = OAuth認証がまだ
@@ -39,7 +39,7 @@ class SessionsController < ApplicationController
        # sessionにuid値を保存し、ユーザ登録のビューで使えるようにしておく。
        # sessionに保存した値を使ってOmniuserモデルを検索すれば、Omniuser.idを取得できる。
        session[:tmp_uid] = auth["uid"]
-       redirect_to new_user_registration_path, :notice => "#{auth["info"]["name"]}さんの#{auth["provider"]}アカウントと接続しました。メンバー登録に必要なメールアドレスとパスワードを入力してください。"
+       redirect_to new_user_registration_path, :notice => "#{auth["info"]["name"]}さんの#{auth["provider"]}と接続してアカウントを作りました。メールアドレスとパスワードを入力してメンバー登録を完了してください。"
     end 
   
   end
