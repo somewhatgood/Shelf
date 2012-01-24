@@ -3,6 +3,8 @@
 class SessionsController < ApplicationController
   def callback
     
+    #raise request.env["omniauth.auth"].to_yaml
+    
     #omniauth.auth環境変数を取得
     auth = request.env["omniauth.auth"]
  

@@ -1,9 +1,43 @@
 class BooksetsController < ApplicationController
+	before_filter :check_login, :check_omniuser_id
+	
+	
+	#ビフォーフィルター
+
+	def check_login
+			unless current_omniuser || current_user
+				redirect_to :new_user_session
+			end
+	end
+
+	def check_omniuser_id #自身のブックセット以外へのアクセスはルートへリダイレクトする（直接 /booksets/:id を叩かれた場合への対処）
+				if params["id"]
+						bookowner = Bookset.find(params["id"]) #まずURLパラメータの:idからアクセスされたリソースの情報を取得
+						 
+						 if current_omniuser #もしオムニでログインしているなら
+							 unless bookowner.omniuser_id == current_omniuser.id #本の所有者とログインユーザのIDが一致しない限りリダイレクト
+								 redirect_to :root
+							 end
+						elsif current_user #もしDEVISEでログインしているなら
+							 unless bookowner.omniuser_id == current_user.omniuser_id #本の所有者とログインユーザのIDが一致しない限りリダイレクト
+							 		redirect_to :root
+							 end
+						end
+				end
+	end
+	
   # GET /booksets
   # GET /booksets.json
   def index
-    @booksets = Bookset.all
-
+  	
+  	if current_omniuser #omniuserでログインしているなら
+  		  #raise current_omniuser.to_yaml
+    		@booksets = Bookset.find_all_by_omniuser_id(current_omniuser.id)
+		elsif current_user #Deviseでログインしているなら
+				#raise current_user.inspect
+				@booksets = Bookset.find_all_by_omniuser_id(current_user.omniuser.id)
+		end
+			
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @booksets }
@@ -42,15 +76,7 @@ class BooksetsController < ApplicationController
   def create
     @bookset = Bookset.new(params[:bookset])
     
-    
-
-
-    
-    #@bookset.omniuser_id = current_omniuser.id
-
-
-
-
+   
 
 
     respond_to do |format|

@@ -7,6 +7,12 @@ class LibraryController < ApplicationController
 			    elsif notice =~ /ようこそリンクシェルフへ/
 			    	render :template => "welcome/mail_confirmed"
 			    end
+			    
+			    @booksets = Bookset.all
+			    #raise @booksets.to_yaml
 
 	end
+ 
+
+  	
 end

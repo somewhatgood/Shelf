@@ -7,9 +7,9 @@ class Omniuser < ActiveRecord::Base
    def self.create_with_omniauth(auth)
    	
 	    create!do |omniuser|
-	    
 		      omniuser.provider = auth["provider"]
 		      omniuser.uid = auth["uid"]
+		      omniuser.image = auth["info"]["image"]
 		 
 		      if omniuser.provider == "facebook"
 		         omniuser.name = auth["info"]["name"]

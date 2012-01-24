@@ -113,6 +113,10 @@ GEM
       activesupport (= 3.1.0)
       bundler (~> 1.0)
       railties (= 3.1.0)
+    rails-erd (0.4.5)
+      activerecord (~> 3.0)
+      activesupport (~> 3.0)
+      ruby-graphviz (~> 0.9.18)
     railties (3.1.0)
       actionpack (= 3.1.0)
       activesupport (= 3.1.0)
@@ -125,6 +129,7 @@ GEM
       json (~> 1.4)
     rest-client (1.6.7)
       mime-types (>= 1.16)
+    ruby-graphviz (0.9.21)
     rubyzip (0.9.5)
     sass (3.1.12)
     sass-rails (3.1.5)
@@ -169,6 +174,7 @@ DEPENDENCIES
   omniauth-twitter
   pg
   rails (= 3.1.0)
+  rails-erd
   sass-rails (~> 3.1.0)
   sqlite3
   thin

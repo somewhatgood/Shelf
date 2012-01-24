@@ -1,12 +1,12 @@
-<h1>Library#index</h1>
-<p>Find me in app/views/library/index.html.erb</p>
+<h1>Shelf#index</h1>
+<p><%= @omniuser.name %>さんのシェルフ</p>
+
 
 <table>
   <tr>
     <th>Description</th>
     <th>Category</th>
     <th>Image url</th>
-    <th>Omniuser_name</th>
   </tr>
   
   <% @booksets.each do |bookset| %>
@@ -14,7 +14,6 @@
   	<td><%= bookset.description %></td>
   	<td><%= bookset.category %></td>
     <td><%= bookset.image_url %></td>
-    <td><%= bookset.omniuser.name %></td>
   </tr>
   <% end %>
 </table>

@@ -15,6 +15,7 @@ end
 
 group :development, :test do
 	gem 'sqlite3'
+	gem 'rails-erd'
 end
 
 # Bundle edge Rails instead:

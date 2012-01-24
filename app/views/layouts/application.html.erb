@@ -12,11 +12,13 @@
 		<%# Deviseでログインした場合 %>
 	    <%= current_user.omniuser.name %>さん
 	    (DEVISEでログイン)omniuserIDは<%= current_user.omniuser_id %>さん
+	    <%= image_tag(current_user.omniuser.image) %>
 	    <%= link_to "ログアウト", destroy_user_session_path, :method => :delete %>
   <% elsif current_omniuser %>
   		<%# Omniuserでログインした場合 %>
        	<%= current_omniuser.name %>さん
        	omniuserIDは<%= current_omniuser.id %>さん
+       	<%= image_tag(current_omniuser.image) %>
        	<%= link_to "ログアウト", logout_path %>
   <% else %>
   <% #どちらでもログインしていなければ「ログイン」を表示。クリックするとログインページへ遷移させる。%>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120115142348) do
+ActiveRecord::Schema.define(:version => 20120124144738) do
 
   create_table "booksets", :force => true do |t|
     t.string   "description", :limit => 99
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(:version => 20120115142348) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "image"
   end
 
   create_table "users", :force => true do |t|
