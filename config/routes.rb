@@ -1,19 +1,29 @@
 Shelf::Application.routes.draw do
+
+	#Apply
+  resources :applies, :except => ['edit']
+  
+  #Shelf
   get "shelf/index"
-
-  devise_for :users
-
+  get "shelf/:id" => "shelf#index" #:id対象ユーザの登録Booksetsの一覧ページ
+  
+  #Library & Welcome
   get "welcome/index", :as => :welcome
   get "library/index", :as => :user_root #Deviseログイン直後の戻り先user_rootとして登録
-  get "shelf/:id" => "shelf#index"
-  
+
+  #Bookset
   resources :booksets
   
   #OmniAuth
   match "/auth/:provider/callback" => "sessions#callback"
   match "/logout" => "sessions#destroy", :as => :logout
+  
+  #Devise
+  devise_for :users
  
+  #Root
   root :to => 'library#index'
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

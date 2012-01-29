@@ -11,7 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120124144738) do
+ActiveRecord::Schema.define(:version => 20120129024525) do
+
+  create_table "applies", :force => true do |t|
+    t.string   "bookset_id"
+    t.string   "omniuser_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "booksets", :force => true do |t|
     t.string   "description", :limit => 99
