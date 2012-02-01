@@ -6,7 +6,7 @@
     <th>Category</th>
     <th>Image url</th>
     <th>Omniuser_name</th>
-    <th></th>
+    <th>Apply from ohter users</th>
     <th></th>
   </tr>
 
@@ -16,9 +16,9 @@
     <td><%= bookset.category %></td>
     <td><%= bookset.image_url %></td>
     <td><%= bookset.omniuser.name %></td>
-    <td><%= link_to 'Show', bookset %></td>
-    <td><%= link_to 'Edit', edit_bookset_path(bookset) %></td>
-    <td><%= link_to 'Destroy', bookset, confirm: 'Are you sure?', method: :delete %></td>
+    <td><%= bookset.applies.exists? ? link_to("申請あり", bookset) : "申請なし" %></td> <!-- 【申請あり】のリンク先をSHOWにしてある -->
+    <td><%= bookset.applies.exists? ? "×" : (link_to 'Edit', edit_bookset_path(bookset)) %></td>
+    <td><%= bookset.applies.exists? ? "×" : (link_to 'Destroy', bookset, confirm: 'Are you sure?', method: :delete) %></td>
   </tr>
 <% end %>
 </table>

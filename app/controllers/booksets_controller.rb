@@ -1,9 +1,10 @@
+#coding:utf-8
 class BooksetsController < ApplicationController
 	before_filter :check_login, :check_omniuser_id
+  before_filter :check_applied, :only => 'edit'
 	
 	
-	#ビフォーフィルター
-
+	#ログインしていなければ、ログインページへリダイレクト
 	def check_login
 			unless current_omniuser || current_user
 				redirect_to :new_user_session
@@ -25,6 +26,17 @@ class BooksetsController < ApplicationController
 						end
 				end
 	end
+	
+	#そのBooksetが他のユーザから申請(apply)済みでないかをチェック
+	def check_applied
+		#raise params.to_yaml
+		#editだからparamsにidが来ているはず
+		bookset = Bookset.find(params['id'])
+    if bookset.applies.exists?
+    	render :text => "このBooksetは交換申請されているため変更できません"
+    end
+	end
+	
 	
   # GET /booksets
   # GET /booksets.json
@@ -48,6 +60,20 @@ class BooksetsController < ApplicationController
   # GET /booksets/1.json
   def show
     @bookset = Bookset.find(params[:id])
+    #raise @bookset.applies.to_yaml
+    
+    omniusers = []
+    @bookset.applies.each do |apply|
+    	omniusers.push(apply.omniuser_id) #★@bookset.applies配列の各要素から、omniuser_idを取得。各申請の持ち主を配列に突っ込む。
+    end
+    
+    changeble_booksets = Bookset.find_all_by_omniuser_id(omniusers)
+    raise changeble_booksets.to_yaml
+    #bookset.appliesメソッドの戻り値は配列であることに注意　eachで回してから、ひとつひとつのプロパティにアクセスする
+		
+
+    #@changeble_booksets = Bookset.find_all_by_omniuser_id(omniuser.id)
+    #raise @changeble_booksets.to_yaml
 
     respond_to do |format|
       format.html # show.html.erb
@@ -76,9 +102,6 @@ class BooksetsController < ApplicationController
   def create
     @bookset = Bookset.new(params[:bookset])
     
-   
-
-
     respond_to do |format|
       if @bookset.save
         format.html { redirect_to @bookset, notice: 'Bookset was successfully created.' }

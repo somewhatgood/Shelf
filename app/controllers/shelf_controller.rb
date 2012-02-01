@@ -1,5 +1,4 @@
 #coding:utf-8
-
 class ShelfController < ApplicationController
 	
 	#ユーザ別にShelfを表示する

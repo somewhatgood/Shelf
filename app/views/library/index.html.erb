@@ -18,20 +18,23 @@
     <td><%= link_to(bookset.omniuser.name, url_for(:controller => "shelf", :id => bookset.omniuser.id )) %></td>
     
     
-    <td>
-    	<%= form_tag({:controller => "applies", :action=> "create"}) do %>
-    	<%= hidden_field :apply, :bookset_id, {:value => bookset.id }%>
-    	<%= hidden_field :apply, :omniuser_id, {:value => current_omniuser ? current_omniuser.id : current_user.omniuser.id }%>
-    	<%= submit_tag '申請する', :confirm => "申請してもOKですか？"%>
-    	<% end %>
+    <td><% if current_omniuser || current_user %>
+	    	<%= form_tag({:controller => "applies", :action=> "create"}) do %>
+	    	<%= hidden_field :apply, :bookset_id, {:value => bookset.id }%>
+	    	<%= hidden_field :apply, :omniuser_id, {:value => current_omniuser ? current_omniuser.id : current_user.omniuser.id }%>
+	    	<%= submit_tag '申請する', :confirm => "申請してもOKですか？"%>
+	    	<% end %>
+	    <% elsif %>
+	    	未ログイン
+	    <% end %>
     </td>
     
     
     
     
-
+<!-- こっちは恐らく不要になるよ-->
 <td><%= link_to("申請する", url_for(:controller => "applies", :action => "new", :bookset => bookset.id)) %></td>
-
+<!-- /こっちは恐らく不要になるよ-->
 
 
     

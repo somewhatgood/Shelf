@@ -14,17 +14,20 @@
 	    (DEVISEでログイン)omniuserIDは<%= current_user.omniuser_id %>さん
 	    <%= image_tag(current_user.omniuser.image) %>
 	    <%= link_to "ログアウト", destroy_user_session_path, :method => :delete %>
+	    <%= link_to "マイシェルフ", booksets_path %>
   <% elsif current_omniuser %>
   		<%# Omniuserでログインした場合 %>
        	<%= current_omniuser.name %>さん
        	omniuserIDは<%= current_omniuser.id %>さん
        	<%= image_tag(current_omniuser.image) %>
        	<%= link_to "ログアウト", logout_path %>
+       	<%= link_to "マイシェルフ", booksets_path %>
   <% else %>
   <% #どちらでもログインしていなければ「ログイン」を表示。クリックするとログインページへ遷移させる。%>
         <%= link_to "メンバー登録", welcome_path %><br/>
         <%= link_to "ログイン", new_user_session_path %>
   <% end %>
+  		<%= link_to "HOME", root_path %>
   <!-- /ログイン・ログアウト-->
 
 

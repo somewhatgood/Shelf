@@ -15,6 +15,16 @@
   <%= @bookset.image_url %>
 </p>
 
+<%= debug(@bookset.applies) %>
+
+<% if true %>
+	<% @bookset.applies.each do |apply| %>
+	
+			
+
+	
+	<% end %>
+<% end %>
 
 <%= link_to 'Edit', edit_bookset_path(@bookset) %> |
 <%= link_to 'Back', booksets_path %>
