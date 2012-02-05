@@ -1,7 +1,13 @@
 Shelf::Application.routes.draw do
 
+
+	#Select_Books（Offer直前、自身の本を選ぶページ）
+  get "select_books/index"
+  
 	#Apply
-  resources :applies, :except => ['edit']
+  resources :offers, :except => ['edit']
+  post "offers/new"
+
   
   #Shelf
   get "shelf/index"

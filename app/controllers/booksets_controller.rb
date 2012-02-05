@@ -4,8 +4,7 @@ class BooksetsController < ApplicationController
   before_filter :check_applied, :only => 'edit'
 	
 	
-	#ログインしていなければ、ログインページへリダイレクト
-	def check_login
+	def check_login #ログインしていなければ、ログインページへリダイレクト
 			unless current_omniuser || current_user
 				redirect_to :new_user_session
 			end
@@ -27,8 +26,7 @@ class BooksetsController < ApplicationController
 				end
 	end
 	
-	#そのBooksetが他のユーザから申請(apply)済みでないかをチェック
-	def check_applied
+	def check_applied #そのBooksetが他のユーザから申請(apply)済みでないかをチェック
 		#raise params.to_yaml
 		#editだからparamsにidが来ているはず
 		bookset = Bookset.find(params['id'])
@@ -41,7 +39,6 @@ class BooksetsController < ApplicationController
   # GET /booksets
   # GET /booksets.json
   def index
-  	
   	if current_omniuser #omniuserでログインしているなら
   		  #raise current_omniuser.to_yaml
     		@booksets = Bookset.find_all_by_omniuser_id(current_omniuser.id)
@@ -61,14 +58,15 @@ class BooksetsController < ApplicationController
   def show
     @bookset = Bookset.find(params[:id])
     #raise @bookset.applies.to_yaml
+    #raise @bookset.replies.to_yaml
     
-    omniusers = []
-    @bookset.applies.each do |apply|
-    	omniusers.push(apply.omniuser_id) #★@bookset.applies配列の各要素から、omniuser_idを取得。各申請の持ち主を配列に突っ込む。
-    end
-    
-    changeble_booksets = Bookset.find_all_by_omniuser_id(omniusers)
-    raise changeble_booksets.to_yaml
+    # omniusers = []
+    # @bookset.applies.each do |apply|
+    	# omniusers.push(apply.omniuser_id) #★@bookset.applies配列の各要素から、omniuser_idを取得。各申請の持ち主を配列に突っ込む。
+    # end
+#     
+    # @changeble_booksets = Bookset.find_all_by_omniuser_id(omniusers)
+    #raise changeble_booksets.to_yaml
     #bookset.appliesメソッドの戻り値は配列であることに注意　eachで回してから、ひとつひとつのプロパティにアクセスする
 		
 

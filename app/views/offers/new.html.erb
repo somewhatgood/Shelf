@@ -1,0 +1,28 @@
+<h1>Offers#new 自分のブックセットからオファーするものを選択する</h1>
+<p>Find me in app/views/offers/new.html.erb</p>
+
+<h2>相手のブックセット</h2>
+<%= @bookset_offered.description %><br/>
+<%= @bookset_offered.omniuser.name %>さん
+
+<h2>自分のブックセット一覧</h2>
+<table>
+	<tr>
+		<th>Description</th>
+		<th>Image</th>
+		<th>SUBMIT</th>
+	</tr>
+<% @mybooksets.each do |mybookset| %>
+	<tr>
+		<td><%= mybookset.description %></td>
+		<td><%= mybookset.image %></td>
+		<td>
+			<%= form_tag({:controller => "offers", :action => "create"}) do %>
+			<%= hidden_field :offer, :bookset_offering_id, {:value => mybookset.id} %>
+			<%= hidden_field :offer, :bookset_offered_id, {:value => @bookset_offered.id} %>
+			<%= submit_tag "決定" %>
+			<% end %>
+			</td>
+	</tr>
+<% end %>
+</table>

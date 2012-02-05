@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <p>
   <b>Description:</b>
   <%= @bookset.description %>
@@ -12,17 +10,27 @@
 
 <p>
   <b>Image url:</b>
-  <%= @bookset.image_url %>
+  <%= @bookset.image %>
 </p>
 
-<%= debug(@bookset.applies) %>
-
-<% if true %>
-	<% @bookset.applies.each do |apply| %>
-	
+<% if false %>
+交換できるかも。申し込みのあったユーザのブックセット一覧です<br/>
+	<% @changeble_booksets.each do |changeble_bookset| %>
+		
+		<div><%= changeble_bookset.description %></div>
+		<div><%= changeble_bookset.omniuser.name %>
 			
-
-	
+		
+		<% if current_omniuser || current_user %>
+	    	<%= form_tag({:controller => "replies", :action=> "create"}) do %>
+	    	<%= hidden_field :reply, :bookset_id, {:value => changeble_bookset.id }%>
+	    	<%= hidden_field :reply, :omniuser_id, {:value => current_omniuser ? current_omniuser.id : current_user.omniuser.id }%>
+	    	<%= submit_tag '返信する', :confirm => "返信してもOKですか？"%>
+	    	<% end %>
+	    <% elsif %>
+	    	未ログイン
+	    <% end %>
+	    
 	<% end %>
 <% end %>
 

@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  bookset_offering_id: 1
+  bookset_offered_id: 1
+
+two:
+  bookset_offering_id: 1
+  bookset_offered_id: 1

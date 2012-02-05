@@ -5,38 +5,28 @@
   <tr>
     <th>Description</th>
     <th>Category</th>
-    <th>Image url</th>
+    <th>Image</th>
     <th>Omniuser_name</th>
-    <th>Apply</th>
+    <th></th>
   </tr>
   
   <% @booksets.each do |bookset| %>
   <tr>
   	<td><%= bookset.description %></td>
   	<td><%= bookset.category %></td>
-    <td><%= bookset.image_url %></td>
+    <td><%= bookset.image %></td>
     <td><%= link_to(bookset.omniuser.name, url_for(:controller => "shelf", :id => bookset.omniuser.id )) %></td>
     
     
     <td><% if current_omniuser || current_user %>
-	    	<%= form_tag({:controller => "applies", :action=> "create"}) do %>
-	    	<%= hidden_field :apply, :bookset_id, {:value => bookset.id }%>
-	    	<%= hidden_field :apply, :omniuser_id, {:value => current_omniuser ? current_omniuser.id : current_user.omniuser.id }%>
-	    	<%= submit_tag '申請する', :confirm => "申請してもOKですか？"%>
+	    	<%= form_tag({:controller => "offers", :action=> "new"}) do %>
+	    	<%= hidden_field :offer, :bookset_id, {:value => bookset.id}%>
+	    	<%= submit_tag 'OFFER'  %>
 	    	<% end %>
 	    <% elsif %>
 	    	未ログイン
 	    <% end %>
     </td>
-    
-    
-    
-    
-<!-- こっちは恐らく不要になるよ-->
-<td><%= link_to("申請する", url_for(:controller => "applies", :action => "new", :bookset => bookset.id)) %></td>
-<!-- /こっちは恐らく不要になるよ-->
-
-
     
   </tr>
   <% end %>

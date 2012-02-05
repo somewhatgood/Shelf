@@ -11,22 +11,22 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120129175123) do
-
-  create_table "applies", :force => true do |t|
-    t.integer  "bookset_id",  :limit => 255
-    t.integer  "omniuser_id", :limit => 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+ActiveRecord::Schema.define(:version => 20120205131744) do
 
   create_table "booksets", :force => true do |t|
     t.string   "description", :limit => 99
     t.string   "category",    :limit => 20
-    t.string   "image_url"
+    t.string   "image"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "omniuser_id"
+  end
+
+  create_table "offers", :force => true do |t|
+    t.integer  "bookset_offering_id"
+    t.integer  "bookset_offered_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "omniusers", :force => true do |t|
