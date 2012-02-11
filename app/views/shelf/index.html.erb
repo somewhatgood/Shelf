@@ -6,14 +6,14 @@
   <tr>
     <th>Description</th>
     <th>Category</th>
-    <th>Image url</th>
+    <th>Image</th>
   </tr>
   
   <% @booksets.each do |bookset| %>
   <tr>
   	<td><%= bookset.description %></td>
   	<td><%= bookset.category %></td>
-    <td><%= bookset.image_url %></td>
+    <td><%= bookset.image %></td>
   </tr>
   <% end %>
 </table>

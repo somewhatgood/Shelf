@@ -1,7 +1,7 @@
 #coding:utf-8
 class BooksetsController < ApplicationController
 	before_filter :check_login, :check_omniuser_id
-  before_filter :check_applied, :only => 'edit'
+  before_filter :check_offers, :only => 'edit'
 	
 	
 	def check_login #ログインしていなければ、ログインページへリダイレクト
@@ -26,11 +26,11 @@ class BooksetsController < ApplicationController
 				end
 	end
 	
-	def check_applied #そのBooksetが他のユーザから申請(apply)済みでないかをチェック
+	def check_offers #そのBooksetが他のユーザから申請(apply)済みでないかをチェック
 		#raise params.to_yaml
 		#editだからparamsにidが来ているはず
 		bookset = Bookset.find(params['id'])
-    if bookset.applies.exists?
+    if bookset.offers.exists?
     	render :text => "このBooksetは交換申請されているため変更できません"
     end
 	end
@@ -39,13 +39,10 @@ class BooksetsController < ApplicationController
   # GET /booksets
   # GET /booksets.json
   def index
-  	if current_omniuser #omniuserでログインしているなら
-  		  #raise current_omniuser.to_yaml
-    		@booksets = Bookset.find_all_by_omniuser_id(current_omniuser.id)
-		elsif current_user #Deviseでログインしているなら
-				#raise current_user.inspect
-				@booksets = Bookset.find_all_by_omniuser_id(current_user.omniuser.id)
-		end
+  	
+  	    uid = current_omniuser ? current_omniuser.id : current_user.omniuser.id #本人のユーザID
+    		@booksets = Bookset.find_all_by_omniuser_id(uid) #本人のブックセット一覧
+    		@booksets_changing = Bookset.where(:omniuser_id => uid, :approval_flag => 1) #本人のブックセットのうち、成立済みのもの
 			
     respond_to do |format|
       format.html # index.html.erb
@@ -56,22 +53,16 @@ class BooksetsController < ApplicationController
   # GET /booksets/1
   # GET /booksets/1.json
   def show
-    @bookset = Bookset.find(params[:id])
-    #raise @bookset.applies.to_yaml
-    #raise @bookset.replies.to_yaml
+    @bookset = Bookset.find(params[:id]) #オファーされたブックセットを取得(offersでアソシエーションしているので、同じIDを持つものがあればoffersから引っ張ってこれる)
     
-    # omniusers = []
-    # @bookset.applies.each do |apply|
-    	# omniusers.push(apply.omniuser_id) #★@bookset.applies配列の各要素から、omniuser_idを取得。各申請の持ち主を配列に突っ込む。
-    # end
-#     
-    # @changeble_booksets = Bookset.find_all_by_omniuser_id(omniusers)
-    #raise changeble_booksets.to_yaml
-    #bookset.appliesメソッドの戻り値は配列であることに注意　eachで回してから、ひとつひとつのプロパティにアクセスする
-		
-
-    #@changeble_booksets = Bookset.find_all_by_omniuser_id(omniuser.id)
-    #raise @changeble_booksets.to_yaml
+    offering_list = []
+    @bookset.offers.each do |offer|
+    	offering_list.push(offer.bookset_offering_id) #オファーしたブックセットのIDだけを配列に突っ込んでゆく
+    end
+    
+    @changeble_booksets = Bookset.find(offering_list) #オファーしたブックセットをまとめて取得（つまり交換可能なブックセット一覧
+    
+   
 
     respond_to do |format|
       format.html # show.html.erb

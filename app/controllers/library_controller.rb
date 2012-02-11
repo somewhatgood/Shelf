@@ -7,8 +7,8 @@ class LibraryController < ApplicationController
 			    elsif notice =~ /ようこそリンクシェルフへ/
 			    	render :template => "welcome/mail_confirmed"
 			    end
-			    @booksets = Bookset.all
-			    #raise @booksets.to_yaml
+			    
+			    @booksets = Bookset.where(:approval_flag => 0)
 	end
 	
 	

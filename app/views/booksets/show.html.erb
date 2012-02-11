@@ -13,19 +13,20 @@
   <%= @bookset.image %>
 </p>
 
-<% if false %>
-交換できるかも。申し込みのあったユーザのブックセット一覧です<br/>
+
+<% unless @changeble_booksets.empty? %>
+OFFERされたブックセットです<br/>
 	<% @changeble_booksets.each do |changeble_bookset| %>
 		
 		<div><%= changeble_bookset.description %></div>
-		<div><%= changeble_bookset.omniuser.name %>
+		<div><%= changeble_bookset.omniuser.name %></div>
 			
 		
 		<% if current_omniuser || current_user %>
-	    	<%= form_tag({:controller => "replies", :action=> "create"}) do %>
-	    	<%= hidden_field :reply, :bookset_id, {:value => changeble_bookset.id }%>
-	    	<%= hidden_field :reply, :omniuser_id, {:value => current_omniuser ? current_omniuser.id : current_user.omniuser.id }%>
-	    	<%= submit_tag '返信する', :confirm => "返信してもOKですか？"%>
+	    	<%= form_tag({:controller => "approvals", :action=> "create"}) do %>
+	    	<%= hidden_field :approval, :bookset_id, {:value => changeble_bookset.id }%>
+	    	<%= hidden_field :approval, :bookset_approved_id, {:value => @bookset.id }%>
+	    	<%= submit_tag 'これと交換する！', :confirm => "本当にOKですか？"%>
 	    	<% end %>
 	    <% elsif %>
 	    	未ログイン

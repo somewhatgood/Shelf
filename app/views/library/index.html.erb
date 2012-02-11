@@ -15,8 +15,9 @@
   	<td><%= bookset.description %></td>
   	<td><%= bookset.category %></td>
     <td><%= bookset.image %></td>
-    <td><%= link_to(bookset.omniuser.name, url_for(:controller => "shelf", :id => bookset.omniuser.id )) %></td>
     
+    <td><%= link_to(bookset.omniuser.name, url_for(:controller => "shelf", :id => bookset.omniuser.id )) %></td>
+
     
     <td><% if current_omniuser || current_user %>
 	    	<%= form_tag({:controller => "offers", :action=> "new"}) do %>

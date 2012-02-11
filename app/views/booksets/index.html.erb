@@ -1,29 +1,57 @@
-<h1>Listing booksets</h1>
+<h1>Listing booksets booksets#index</h1>
+<h2>自分のブックセットの一覧と状態表示</h2>
 
+<%# 取引成立したブックセット %>
+<% if @bookset_changing %>
+取引が成立したブックセットがあります
+	<table>
+	  <tr>
+	    <th>Description</th>
+	    <th>Category</th>
+	    <th>Image url</th>
+	    <th>Status</th>
+	    <th></th>
+	  </tr>
+	
+	<% @booksets_changing.each do |bookset| %>
+		<% unless bookset.approval_flag == 0 %>
+		  <tr>
+		    <td><%= bookset.description %></td>
+		    <td><%= bookset.category %></td>
+		    <td><%= bookset.image %></td>
+		    <td><%= bookset.approvals.empty? ? "---" : link_to("発送してください", bookset) %></td>
+		    <td><%= bookset.offers.exists? ? "×" : (link_to 'Destroy', bookset, confirm: 'Are you sure?', method: :delete) %></td>
+		  </tr>
+	  	<% end %> 	
+	<% end %>
+	</table>
+<% end %>
+<%# END / 取引成立したブックセット %>
+
+<%# 自分のブックセット一覧 %>
 <table>
   <tr>
     <th>Description</th>
     <th>Category</th>
-    <th>Image url</th>
-    <th>Omniuser_name</th>
-    <th>Apply</th>
-    <th>Reply</th>
+    <th>Image</th>
+    <th>Status</th>
     <th></th>
   </tr>
 
 <% @booksets.each do |bookset| %>
-  <tr>
-    <td><%= bookset.description %></td>
-    <td><%= bookset.category %></td>
-    <td><%= bookset.image %></td>
-    <td><%= bookset.omniuser.name %></td>
-    <td><%#= bookset.applies.exists? ? link_to("アプローチあり", bookset) : "アプローチなし" %></td> <!-- 【申請あり】のリンク先をSHOWにしてある -->
-    <td><%#= bookset.replies.exists? ? link_to("成立チャンス", bookset) : "返信なし" %></td> <!-- 【申請あり】のリンク先をSHOWにしてある -->
-    <td><%#= bookset.applies.exists? ? "×" : (link_to 'Edit', edit_bookset_path(bookset)) %></td>
-    <td><%#= bookset.applies.exists? ? "×" : (link_to 'Destroy', bookset, confirm: 'Are you sure?', method: :delete) %></td>
-  </tr>
+	<% unless bookset.approval_flag == 1 %>
+	  <tr>
+	    <td><%= bookset.description %></td>
+	    <td><%= bookset.category %></td>
+	    <td><%= bookset.image %></td>
+	    <td><%= bookset.offers.empty? ? "---" : link_to("OFFERあり", bookset) %></td>
+	    <td><%= bookset.offers.empty? ? (link_to 'Edit', edit_bookset_path(bookset)) : "×" %></td>
+	    <td><%= bookset.offers.empty? ? (link_to 'Destroy', bookset, confirm: 'Are you sure?', method: :delete) : "×" %></td>
+	  </tr>
+  	<% end %> 	
 <% end %>
 </table>
+<%# END / 自分のブックセット一覧 %>
 
 <br />
 

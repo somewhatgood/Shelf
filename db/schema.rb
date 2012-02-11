@@ -11,20 +11,30 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120205131744) do
+ActiveRecord::Schema.define(:version => 20120211134512) do
+
+  create_table "approvals", :force => true do |t|
+    t.integer  "bookset_id"
+    t.integer  "bookset_approved_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "booksets", :force => true do |t|
-    t.string   "description", :limit => 99
-    t.string   "category",    :limit => 20
+    t.string   "description",   :limit => 99
+    t.string   "category",      :limit => 20
     t.string   "image"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "omniuser_id"
+    t.integer  "approval_flag",               :default => 0
+    t.integer  "offering_flag"
+    t.integer  "offered_flag"
   end
 
   create_table "offers", :force => true do |t|
     t.integer  "bookset_offering_id"
-    t.integer  "bookset_offered_id"
+    t.integer  "bookset_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

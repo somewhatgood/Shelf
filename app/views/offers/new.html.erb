@@ -17,12 +17,18 @@
 		<td><%= mybookset.description %></td>
 		<td><%= mybookset.image %></td>
 		<td>
-			<%= form_tag({:controller => "offers", :action => "create"}) do %>
-			<%= hidden_field :offer, :bookset_offering_id, {:value => mybookset.id} %>
-			<%= hidden_field :offer, :bookset_offered_id, {:value => @bookset_offered.id} %>
-			<%= submit_tag "決定" %>
+			<%# オファー済みならボタンを非表示にする。Offerテーブルに相手と自分のidがあればオファー済みということ %>
+			<% res = Offer.where(:bookset_id => @bookset_offered.id, :bookset_offering_id => mybookset.id) %>
+			<% if res.empty? %>
+					<%= form_tag({:controller => "offers", :action => "create"}) do %>
+						<%= hidden_field :offer, :bookset_offering_id, {:value => mybookset.id} %><%#オファー元（自分）のブックセットID %> 
+						<%= hidden_field :offer, :bookset_id, {:value => @bookset_offered.id} %><%# オファー相手のブックセットID %> 
+						<%= submit_tag "これでOFFER" %>
+					<% end %>
+			<% else %>
+					OFFER済み
 			<% end %>
-			</td>
+		</td>
 	</tr>
 <% end %>
 </table>
