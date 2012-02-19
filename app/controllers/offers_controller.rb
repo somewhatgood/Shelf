@@ -21,16 +21,23 @@ class OffersController < ApplicationController
   #params["offer"]["bookset_id"] 　オファー先のブックセットID
   def create
 		@offer = Offer.new(params["offer"])
-		if @offer.save
+		@bookset_offered = Bookset.find(params["offer"]["bookset_id"])
+		@bookset_offering = Bookset.find(params["offer"]["bookset_offering_id"])
+		
+		# TODO: オファー先のブックセットが取引成立していないことを確認する必要あり
+		if @offer.save && @bookset_offered.update_attribute(:offered_flag, 1) && @bookset_offering.update_attribute(:offering_flag, 1)	
 			redirect_to	:new_offer, :notice => 'オファーを出しました', :flash => {:bookset_id => params["offer"]["bookset_id"] }
+		else
+			render :text => '処理に失敗しました。'
 		end
   end
   
   
-  def has_bookset #自分のbooksetを登録していなければ、相手にOfferする資格がない
-  	@mybooksets = Bookset.find_all_by_omniuser_id(current_omniuser ? current_omniuser.id : current_user.omniuser.id)
+  def has_bookset #オファー可能なbooksetがなければ、相手にOfferする資格がない（成立していないBooksetが１冊は必要）
+  	uid = current_omniuser ? current_omniuser.id : current_user.omniuser.id
+  	@mybooksets = Bookset.where(:omniuser_id => uid, :approval_flag => 0) #未成立のものだけ
   	if @mybooksets.empty?
-  		 render :text => 'まだBooksetを登録していないようです'
+  		 render :text => 'オファー可能なブックセットがないようです。こちらから登録してください。'
   	end
   end
   

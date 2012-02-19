@@ -1,3 +1,6 @@
+<h2>Booksets#Show　その本がオファーしているもの、オファーされているもの、取引相手を表示</h2>
+
+<!-- 自分のブックセット  -->
 <p>
   <b>Description:</b>
   <%= @bookset.description %>
@@ -9,31 +12,45 @@
 </p>
 
 <p>
-  <b>Image url:</b>
+  <b>Image:</b>
   <%= @bookset.image %>
 </p>
 
+<% if @pair_bookset %>
+		▼いますぐ交換の手続きをはじめてください<br/>
+		<%= @pair_bookset.description %><br/>
+		<%= @pair_bookset.omniuser.name %><br/>
+		
+<% end %>
 
-<% unless @changeble_booksets.empty? %>
-OFFERされたブックセットです<br/>
-	<% @changeble_booksets.each do |changeble_bookset| %>
-		
-		<div><%= changeble_bookset.description %></div>
-		<div><%= changeble_bookset.omniuser.name %></div>
+
+<% if params["pg"] == "fr" %>
+	<% unless @changeble_booksets.empty? %>
+	OFFERされたブックセットです<br/>
+		<% @changeble_booksets.each do |changeble_bookset| %>
 			
-		
-		<% if current_omniuser || current_user %>
+			<div><%= changeble_bookset.description %></div>
+			<div><%= changeble_bookset.omniuser.name %></div>
 	    	<%= form_tag({:controller => "approvals", :action=> "create"}) do %>
-	    	<%= hidden_field :approval, :bookset_id, {:value => changeble_bookset.id }%>
-	    	<%= hidden_field :approval, :bookset_approved_id, {:value => @bookset.id }%>
-	    	<%= submit_tag 'これと交換する！', :confirm => "本当にOKですか？"%>
+		    	<%= hidden_field :approval, :bookset_id, {:value => changeble_bookset.id }%>
+		    	<%= hidden_field :approval, :bookset_pair_id, {:value => @bookset.id }%>
+		    	<%= submit_tag 'これと交換する！', :confirm => "本当にOKですか？"%>
 	    	<% end %>
-	    <% elsif %>
-	    	未ログイン
-	    <% end %>
-	    
+		    
+		<% end %>
+	<% end %>
+<% end %>
+<% if params["pg"] == "to" %>
+	<% unless @offering_booksets.empty? %>
+	申し込み中のブックセットです<br/>
+		<% @offering_booksets.each do |offering_bookset| %>
+			<hr>
+			<div><%= offering_bookset.description %></div>
+			<div><%= offering_bookset.omniuser.name %></div>
+			<div>申し込みをやめる</div>
+		    
+		<% end %>
 	<% end %>
 <% end %>
 
-<%= link_to 'Edit', edit_bookset_path(@bookset) %> |
 <%= link_to 'Back', booksets_path %>

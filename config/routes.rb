@@ -26,6 +26,10 @@ Shelf::Application.routes.draw do
   #Bookset
   resources :booksets
   
+  #Monoset
+  resources :monosets, :controller => 'booksets'
+
+  
   #OmniAuth
   match "/auth/:provider/callback" => "sessions#callback"
   match "/logout" => "sessions#destroy", :as => :logout

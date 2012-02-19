@@ -2,15 +2,14 @@
 <h2>自分のブックセットの一覧と状態表示</h2>
 
 <%# 取引成立したブックセット %>
-<% if @bookset_changing %>
+<% unless @booksets_changing.empty? %>
 取引が成立したブックセットがあります
 	<table>
 	  <tr>
 	    <th>Description</th>
 	    <th>Category</th>
-	    <th>Image url</th>
+	    <th>Image</th>
 	    <th>Status</th>
-	    <th></th>
 	  </tr>
 	
 	<% @booksets_changing.each do |bookset| %>
@@ -20,7 +19,6 @@
 		    <td><%= bookset.category %></td>
 		    <td><%= bookset.image %></td>
 		    <td><%= bookset.approvals.empty? ? "---" : link_to("発送してください", bookset) %></td>
-		    <td><%= bookset.offers.exists? ? "×" : (link_to 'Destroy', bookset, confirm: 'Are you sure?', method: :delete) %></td>
 		  </tr>
 	  	<% end %> 	
 	<% end %>
@@ -44,9 +42,17 @@
 	    <td><%= bookset.description %></td>
 	    <td><%= bookset.category %></td>
 	    <td><%= bookset.image %></td>
-	    <td><%= bookset.offers.empty? ? "---" : link_to("OFFERあり", bookset) %></td>
-	    <td><%= bookset.offers.empty? ? (link_to 'Edit', edit_bookset_path(bookset)) : "×" %></td>
-	    <td><%= bookset.offers.empty? ? (link_to 'Destroy', bookset, confirm: 'Are you sure?', method: :delete) : "×" %></td>
+	    <td>
+	    	<% if bookset.offered_flag == 1 %>
+	    		<%= link_to("OFFERがあります", {:controller => 'booksets', :action => 'show', :id => bookset.id, :pg => 'fr' }) %><br/>
+	    	<% end %>
+	    	<% if bookset.offering_flag == 1 %>
+	    		<%= link_to("OFFERしています", {:controller => 'booksets', :action => 'show', :id => bookset.id, :pg => 'to' }) %>
+	    	<% end %>
+	    	
+	    </td>
+	    <td><%= bookset.offered_flag == 1 || bookset.offering_flag == 1 ? "×" : (link_to 'Edit', edit_bookset_path(bookset)) %></td>
+	  	<td><%= bookset.offered_flag == 1 || bookset.offering_flag == 1 ? "×" : (link_to 'Destroy', bookset, confirm: 'Are you sure?', method: :delete) %></td>
 	  </tr>
   	<% end %> 	
 <% end %>

@@ -3,43 +3,8 @@ class BooksetsController < ApplicationController
 	before_filter :check_login, :check_omniuser_id
   before_filter :check_offers, :only => 'edit'
 	
-	
-	def check_login #ログインしていなければ、ログインページへリダイレクト
-			unless current_omniuser || current_user
-				redirect_to :new_user_session
-			end
-	end
-
-	def check_omniuser_id #自身のブックセット以外へのアクセスはルートへリダイレクトする（直接 /booksets/:id を叩かれた場合への対処）
-				if params["id"]
-						bookowner = Bookset.find(params["id"]) #まずURLパラメータの:idからアクセスされたリソースの情報を取得
-						 
-						 if current_omniuser #もしオムニでログインしているなら
-							 unless bookowner.omniuser_id == current_omniuser.id #本の所有者とログインユーザのIDが一致しない限りリダイレクト
-								 redirect_to :root
-							 end
-						elsif current_user #もしDEVISEでログインしているなら
-							 unless bookowner.omniuser_id == current_user.omniuser_id #本の所有者とログインユーザのIDが一致しない限りリダイレクト
-							 		redirect_to :root
-							 end
-						end
-				end
-	end
-	
-	def check_offers #そのBooksetが他のユーザから申請(apply)済みでないかをチェック
-		#raise params.to_yaml
-		#editだからparamsにidが来ているはず
-		bookset = Bookset.find(params['id'])
-    if bookset.offers.exists?
-    	render :text => "このBooksetは交換申請されているため変更できません"
-    end
-	end
-	
-	
-  # GET /booksets
-  # GET /booksets.json
+  # 自分のブックセット一覧を表示する
   def index
-  	
   	    uid = current_omniuser ? current_omniuser.id : current_user.omniuser.id #本人のユーザID
     		@booksets = Bookset.find_all_by_omniuser_id(uid) #本人のブックセット一覧
     		@booksets_changing = Bookset.where(:omniuser_id => uid, :approval_flag => 1) #本人のブックセットのうち、成立済みのもの
@@ -53,16 +18,32 @@ class BooksetsController < ApplicationController
   # GET /booksets/1
   # GET /booksets/1.json
   def show
-    @bookset = Bookset.find(params[:id]) #オファーされたブックセットを取得(offersでアソシエーションしているので、同じIDを持つものがあればoffersから引っ張ってこれる)
+  	#当ページの該当ブックセットを取得。
+  	#offersでアソシエーションしているので、同じIDを持つものがあればoffersから引っ張ってこれる、つまり当ページの本にオファーした本の一覧がとれる
+    @bookset = Bookset.find(params[:id]) 
     
-    offering_list = []
+    #オファー元のブックセットを取得する
+    offer_from = []
     @bookset.offers.each do |offer|
-    	offering_list.push(offer.bookset_offering_id) #オファーしたブックセットのIDだけを配列に突っ込んでゆく
+    	offer_from.push(offer.bookset_offering_id)
     end
+    @changeble_booksets = Bookset.find(offer_from) #オファー元ブックセット一覧（つまり交換可能なブックセットのリスト）
     
-    @changeble_booksets = Bookset.find(offering_list) #オファーしたブックセットをまとめて取得（つまり交換可能なブックセット一覧
-    
-   
+		#オファー先のブックセットを取得する
+		results = Offer.where(:bookset_offering_id => params[:id])
+		offer_to = []
+		results.each do |res|
+			offer_to.push(res.bookset_id)
+		end
+		@offering_booksets = Bookset.find(offer_to) #オファー先のブックセット一覧（申し込み中のもの）
+		
+		#取引成立の場合　取引相手のブックセットを取得する（無い場合は後続を処理しない）
+		@my_approval_bookset = Approval.where(:bookset_id => params[:id]).first
+		if @my_approval_bookset
+			@pair_bookset_id = @my_approval_bookset.bookset_pair_id
+			@pair_bookset = Bookset.find(@pair_bookset_id)
+			#raise @pair_bookset.to_yaml
+		end
 
     respond_to do |format|
       format.html # show.html.erb
@@ -130,3 +111,34 @@ class BooksetsController < ApplicationController
     end
   end
 end
+
+	def check_login #ログインしていなければ、ログインページへリダイレクト
+			unless current_omniuser || current_user
+				redirect_to :new_user_session
+			end
+	end
+
+	def check_omniuser_id #自身のブックセット以外へのアクセスはルートへリダイレクトする（直接 /booksets/:id を叩かれた場合への対処）
+				if params["id"]
+						bookowner = Bookset.find(params["id"]) #まずURLパラメータの:idからアクセスされたリソースの情報を取得
+						 
+						 if current_omniuser #もしオムニでログインしているなら
+							 unless bookowner.omniuser_id == current_omniuser.id #本の所有者とログインユーザのIDが一致しない限りリダイレクト
+								 redirect_to :root
+							 end
+						elsif current_user #もしDEVISEでログインしているなら
+							 unless bookowner.omniuser_id == current_user.omniuser_id #本の所有者とログインユーザのIDが一致しない限りリダイレクト
+							 		redirect_to :root
+							 end
+						end
+				end
+	end
+	
+	def check_offers #そのBooksetが他のユーザから申請(apply)済みでないかをチェック
+		#raise params.to_yaml
+		#editだからparamsにidが来ているはず
+		bookset = Bookset.find(params['id'])
+    if bookset.offers.exists?
+    	render :text => "このBooksetは交換申請されているため変更できません"
+    end
+	end
