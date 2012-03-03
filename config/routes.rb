@@ -1,8 +1,5 @@
 Shelf::Application.routes.draw do
 
-
-	
-
 	# #Select_Books（Offer直前、自身の本を選ぶページ）
   # get "select_books/index"
   
@@ -26,9 +23,8 @@ Shelf::Application.routes.draw do
   #Bookset
   resources :booksets
   
-  #Monoset
-  resources :monosets, :controller => 'booksets'
-
+  #Items
+  resources :items
   
   #OmniAuth
   match "/auth/:provider/callback" => "sessions#callback"

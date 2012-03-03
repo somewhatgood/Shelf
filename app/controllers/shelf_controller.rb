@@ -1,6 +1,6 @@
 #coding:utf-8
 class ShelfController < ApplicationController
-	
+	#TODO SHELFコントローラーってほんとに必要？再考する
 	#ユーザ別にShelfを表示する
 	#shelf/:idでアクセスしたときのアクション
   def index

@@ -1,0 +1,64 @@
+<h1>Listing items</h1>
+<h2>本人のアイテム一覧と状態表示</h2>
+
+<%# 取引成立したアイテム %>
+<% unless @items_changing.empty? %>
+取引が成立したアイテムがあります
+	<table>
+	  <tr>
+	    <th>Description</th>
+	    <th>Category</th>
+	    <th>Image</th>
+	    <th>Status</th>
+	  </tr>
+	
+	<% @items_changing.each do |item| %>
+		<% unless item.approval_flag == 0 %>
+		  <tr>
+		    <td><%= item.description %></td>
+		    <td><%= item.category %></td>
+		    <td><%= item.image %></td>
+		    <td><%= item.approvals.empty? ? "---" : link_to("発送してください", item) %></td>
+		  </tr>
+	  	<% end %> 	
+	<% end %>
+	</table>
+<% end %>
+<%# END / 取引成立したアイテム %>
+
+<%# 本人のアイテム一覧 %>
+<table>
+  <tr>
+    <th>Description</th>
+    <th>Category</th>
+    <th>Image</th>
+    <th>Status</th>
+    <th></th>
+  </tr>
+
+<% @items.each do |item| %>
+	<% unless item.approval_flag == 1 %>
+	  <tr>
+	    <td><%= item.description %></td>
+	    <td><%= item.category %></td>
+	    <td><%= item.image %></td>
+	    <td>
+	    	<% if item.offered_flag == 1 %>
+	    		<%= link_to("OFFERがあります", {:controller => 'items', :action => 'show', :id => item.id, :pg => 'fr' }) %><br/>
+	    	<% end %>
+	    	<% if item.offering_flag == 1 %>
+	    		<%= link_to("OFFERしています", {:controller => 'items', :action => 'show', :id => item.id, :pg => 'to' }) %>
+	    	<% end %>
+	    	
+	    </td>
+	    <td><%= item.offered_flag == 1 || item.offering_flag == 1 ? "×" : (link_to 'Edit', edit_item_path(item)) %></td>
+	  	<td><%= item.offered_flag == 1 || item.offering_flag == 1 ? "×" : (link_to 'Destroy', item, confirm: 'Are you sure?', method: :delete) %></td>
+	  </tr>
+  	<% end %> 	
+<% end %>
+</table>
+<%# END / 自分のブックセット一覧 %>
+
+<br />
+
+<%= link_to 'New Item', new_item_path %>

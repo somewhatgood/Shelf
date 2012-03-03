@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  omniuser_id: 1
+  description: MyString
+  category: MyString
+  image: MyString
+  offered_flag: 1
+  offering_flag: 1
+  approval_flag: 1
+
+two:
+  omniuser_id: 1
+  description: MyString
+  category: MyString
+  image: MyString
+  offered_flag: 1
+  offering_flag: 1
+  approval_flag: 1

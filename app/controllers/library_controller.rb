@@ -1,4 +1,4 @@
-	#coding:utf-8
+#coding:utf-8
 class LibraryController < ApplicationController
 
   def index
@@ -8,7 +8,8 @@ class LibraryController < ApplicationController
 			    	render :template => "welcome/mail_confirmed"
 			    end
 			    
-			    @booksets = Bookset.where(:approval_flag => 0)
+			    #@booksets = Bookset.where(:approval_flag => 0)
+			    @items = Item.where(:approval_flag => 0)
 	end
 	
 	

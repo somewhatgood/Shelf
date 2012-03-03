@@ -9,8 +9,11 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 Bookset.delete_all
+Item.delete_all
 Omniuser.delete_all
 User.delete_all
+Approval.delete_all
+Offer.delete_all
 
 User.create(
 	id: 1,
@@ -169,4 +172,155 @@ Bookset.create(
   category: '自己啓発',
   image: '15.jpg',
   omniuser_id: 5
+)
+
+Item.create(
+  id: 1,
+  description: "小さなチーム、大きな仕事",
+  category: 'ビジネス',
+  image: '01.jpg',
+  omniuser_id: 1,
+  offered_flag: 0, 
+  offering_flag: 0,
+  approval_flag: 0
+)
+Item.create(
+  id: 2,
+  description: "プラットフォーム戦略",
+  category: 'ビジネス',
+  image: '02.jpg',
+  omniuser_id: 1,
+  offered_flag: 0, 
+  offering_flag: 0,
+  approval_flag: 0
+)
+Item.create(
+  id: 3,
+  description: "シェア 共有から生み出す新戦略",
+  category: 'ビジネス',
+  image: '03.jpg',
+  omniuser_id: 1,
+  offered_flag: 0, 
+  offering_flag: 0,
+  approval_flag: 0
+)
+Item.create(
+  id: 4,
+  description: "上級ウェブ解析士教本",
+  category: 'IT',
+  image: '04.jpg',
+  omniuser_id: 2,
+  offered_flag: 0, 
+  offering_flag: 0,
+  approval_flag: 0
+)
+Item.create(
+  id: 5,
+  description: "よくわかる基本情報技術者試験",
+  category: 'IT',
+  image: '05.jpg',
+  omniuser_id: 2,
+  offered_flag: 0, 
+  offering_flag: 0,
+  approval_flag: 0
+)
+Item.create(
+  id: 6,
+  description: "応用情報技術者合格教本",
+  category: 'IT',
+  image: '06.jpg',
+  omniuser_id: 2,
+  offered_flag: 0, 
+  offering_flag: 0,
+  approval_flag: 0
+)
+Item.create(
+  id: 7,
+  description: "LIFE AFTER GOD",
+  category: '小説',
+  image: '07.jpg',
+  omniuser_id: 3,
+  offered_flag: 0, 
+  offering_flag: 0,
+  approval_flag: 0
+)
+Item.create(
+  id: 8,
+  description: "シャンプー・プラネット",
+  category: '小説',
+  image: '08.jpg',
+  omniuser_id: 3,
+  offered_flag: 0, 
+  offering_flag: 0,
+  approval_flag: 0
+)
+Item.create(
+  id: 9,
+  description: "ノルウェイの森",
+  category: '小説',
+  image: '09.jpg',
+  omniuser_id: 3,
+  offered_flag: 0, 
+  offering_flag: 0,
+  approval_flag: 0
+)
+Item.create(
+  id: 10,
+  description: "AKB48の秘密",
+  category: '芸能',
+  image: '10.jpg',
+  omniuser_id: 4,
+  offered_flag: 0, 
+  offering_flag: 0,
+  approval_flag: 0
+)
+Item.create(
+  id: 11,
+  description: "宇多田ヒカル、歌姫の伝説",
+  category: '芸能',
+  image: '11.jpg',
+  omniuser_id: 4,
+  offered_flag: 0, 
+  offering_flag: 0,
+  approval_flag: 0
+)
+Item.create(
+  id: 12,
+  description: "80年代を彩ったアメリカン・アイドルたち",
+  category: '芸能',
+  image: '12.jpg',
+  omniuser_id: 4,
+  offered_flag: 0, 
+  offering_flag: 0,
+  approval_flag: 0
+)
+Item.create(
+  id: 13,
+  description: "ニーチェの言葉",
+  category: '自己啓発',
+  image: '13.jpg',
+  omniuser_id: 5,
+  offered_flag: 0, 
+  offering_flag: 0,
+  approval_flag: 0
+)
+Item.create(
+  id: 14,
+  description: "ジョブズ名言集",
+  category: '自己啓発',
+  image: '14.jpg',
+  omniuser_id: 5,
+  offered_flag: 0, 
+  offering_flag: 0,
+  approval_flag: 0
+)
+Item.create(
+  id: 15,
+  description: "７つの習慣",
+  category: '自己啓発',
+  image: '15.jpg',
+  omniuser_id: 5,
+  offered_flag: 0, 
+  offering_flag: 0,
+  approval_flag: 0
 )

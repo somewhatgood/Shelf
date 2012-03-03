@@ -11,13 +11,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120212125934) do
+ActiveRecord::Schema.define(:version => 20120219150431) do
 
   create_table "approvals", :force => true do |t|
-    t.integer  "bookset_id"
-    t.integer  "bookset_pair_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "item_id"
+    t.integer  "item_pair_id"
+  end
+
+  create_table "offers", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "item_id"
+    t.integer  "item_offering_id"
   end
 
   create_table "booksets", :force => true do |t|
@@ -32,9 +39,14 @@ ActiveRecord::Schema.define(:version => 20120212125934) do
     t.integer  "offered_flag"
   end
 
-  create_table "offers", :force => true do |t|
-    t.integer  "bookset_offering_id"
-    t.integer  "bookset_id"
+  create_table "items", :force => true do |t|
+    t.integer  "omniuser_id"
+    t.string   "description"
+    t.string   "category"
+    t.string   "image"
+    t.integer  "offered_flag",  :default => 0
+    t.integer  "offering_flag", :default => 0
+    t.integer  "approval_flag", :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -1,8 +1,8 @@
 # coding:utf-8
-class Bookset < ActiveRecord::Base
-	#belongs_to :omniuser
-	#has_many :offers
-	#has_many :approvals
+class Item < ActiveRecord::Base
+  belongs_to :omniuser
+	has_many :offers
+	has_many :approvals
 
 	  validates :description, presence: true,
 	  						  length: {minimum: 1, maximum: 99, message: '1〜99文字以内にしてください。'}

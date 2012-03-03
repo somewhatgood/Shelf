@@ -3,25 +3,25 @@
 
 <table>
   <tr>
-    <th>Description</th>
-    <th>Category</th>
-    <th>Image</th>
-    <th>Omniuser_name</th>
+    <th>内容</th>
+    <th>カテゴリー</th>
+    <th>画像</th>
+    <th>所有者</th>
     <th></th>
   </tr>
-  
-  <% @booksets.each do |bookset| %>
+
+  <% @items.each do |item| %>
   <tr>
-  	<td><%= bookset.description %></td>
-  	<td><%= bookset.category %></td>
-    <td><%= bookset.image %></td>
+  	<td><%= item.description %></td>
+  	<td><%= item.category %></td>
+    <td><%= item.image %></td>
     
-    <td><%= link_to(bookset.omniuser.name, url_for(:controller => "shelf", :id => bookset.omniuser.id )) %></td>
+    <td><%= link_to(item.omniuser.name, url_for(:controller => "shelf", :id => item.omniuser.id )) %></td>
 
     
     <td><% if current_omniuser || current_user %>
 	    	<%= form_tag({:controller => "offers", :action=> "new"}) do %>
-	    	<%= hidden_field :offer, :bookset_id, {:value => bookset.id}%>
+	    	<%= hidden_field :offer, :item_id, {:value => item.id}%>
 	    	<%= submit_tag 'OFFER'  %>
 	    	<% end %>
 	    <% elsif %>

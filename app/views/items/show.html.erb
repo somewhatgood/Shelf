@@ -1,0 +1,56 @@
+<h2>Items#Show　そのアイテムのオファー先、オファー元、取引成立なら相手を表示</h2>
+
+<!-- 本人アイテム  -->
+<p>
+  <b>Description:</b>
+  <%= @item.description %>
+</p>
+
+<p>
+  <b>Category:</b>
+  <%= @item.category %>
+</p>
+
+<p>
+  <b>Image:</b>
+  <%= @item.image %>
+</p>
+
+<% if @pair_item %>
+		▼いますぐ交換の手続きをはじめてください<br/>
+		<%= @pair_item.description %><br/>
+		<%= @pair_item.omniuser.name %><br/>
+		
+<% end %>
+
+
+<% if params["pg"] == "fr" %>
+	<% unless @changeble_items.empty? %>
+	▼下記からOFFERされています<br/>
+		<% @changeble_items.each do |changeble_item| %>
+			
+			<div><%= changeble_item.description %></div>
+			<div><%= changeble_item.omniuser.name %></div>
+	    	<%= form_tag({:controller => "approvals", :action=> "create"}) do %>
+		    	<%= hidden_field :approval, :item_id, {:value => changeble_item.id }%>
+		    	<%= hidden_field :approval, :item_pair_id, {:value => @item.id }%>
+		    	<%= submit_tag 'これと交換する！', :confirm => "本当にOKですか？"%>
+	    	<% end %>
+		    
+		<% end %>
+	<% end %>
+<% end %>
+<% if params["pg"] == "to" %>
+	<% unless @offering_items.empty? %>
+	申し込み中のブックセットです<br/>
+		<% @offering_items.each do |offering_item| %>
+			<hr>
+			<div><%= offering_item.description %></div>
+			<div><%= offering_item.omniuser.name %></div>
+			<div>申し込みをやめる</div>
+		    
+		<% end %>
+	<% end %>
+<% end %>
+
+<%= link_to 'Back', items_path %>
